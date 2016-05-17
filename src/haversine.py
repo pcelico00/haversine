@@ -12,12 +12,12 @@ class Haversine(object):
     def __init__(self):
         self.earth_radius = 6373  # km
 
-    def convert_degree_to_radian(self, value_in_degree):
+    @staticmethod
+    def convert_degree_to_radian(value_in_degree):
         value_in_radian = math.radians(value_in_degree)
         return value_in_radian
 
     def compute_distance_between_lat_lon_pairs(self, origin_lat_lon_pair, destination_lat_lon_pair):
-
         origin_latitude, origin_longitude = origin_lat_lon_pair
         destination_latitude, destination_longitude = destination_lat_lon_pair
 
@@ -34,11 +34,11 @@ class Haversine(object):
         latitude_difference_in_radian = destination_latitude_in_radian - origin_latitude_in_radian
         longitude_difference_in_radian = destination_longitude_in_radian - origin_longitude_in_radian
 
-        haversine_of_central_angle = (math.sin(latitude_difference_in_radian/2))**2 + \
+        haversine_of_central_angle = (math.sin(latitude_difference_in_radian / 2)) ** 2 + \
                                      math.cos(destination_latitude_in_radian) * math.cos(origin_latitude_in_radian) * \
-                                     (math.sin(longitude_difference_in_radian/2))**2
+                                     (math.sin(longitude_difference_in_radian / 2)) ** 2
 
-        central_angle = 2 * math.atan2(math.sqrt(haversine_of_central_angle), math.sqrt(1-haversine_of_central_angle))
+        central_angle = 2 * math.atan2(math.sqrt(haversine_of_central_angle), math.sqrt(1 - haversine_of_central_angle))
         distance_between_lat_lon_pairs = self.earth_radius * central_angle
 
         return distance_between_lat_lon_pairs
